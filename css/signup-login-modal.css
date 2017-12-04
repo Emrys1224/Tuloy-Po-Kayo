@@ -1,0 +1,94 @@
+﻿.modal-content {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.modal-header {
+	text-align: right;
+	border-bottom: none;
+	padding: 10px;
+}
+
+.err-msg {
+    color: #ff8a8a;
+    font-size: 13px;
+}
+.err-msg p {
+	margin-bottom: 0;
+}
+
+.form-horizontal .checkbox {
+    min-height: 30px;
+    position: relative;
+    left: 149px;
+    padding-top: 0;
+}
+
+.modal-footer p {
+	text-align: center;
+}
+
+#form-login .form-group, #form-register .form-group {
+	margin-bottom: 5px;
+}
+
+#btn-login, #btn-register {
+	float: right;
+	position: relative;
+	left: -1px;
+}
+
+#btn-login {
+    top: -17px;
+}
+
+#btn-register {
+    top: 0px;
+}
+
+#recover-acct {
+	position: relative;
+	top: 28px;
+}
+
+#signin-btn-fb, #signin-btn-gplus {
+	margin: 15px 35px;
+}
+
+#signin-btn-fb{
+	background-color: #D0E9FF;
+}
+
+#signin-btn-gplus {
+	background-color: #FFC5C5;
+}
+
+@media (min-width: 768px) {
+	#recover-acct {
+	    position: relative;
+	    top: 0;
+	    left: 149px;
+	}
+	#owner-radio {
+		position: relative;
+	    left: -5px;
+	}
+	.err-msg {
+	    margin-bottom: 15px;
+	}
+	#form-login .err-msg p {
+	    padding-left: 149px;
+	    padding-right: 50px;
+	}
+	#form-register .err-msg p{
+	    padding-left: 199px;
+	    padding-right: 50px;
+	}
+	#form-register .err-msg ul{
+	    padding-left: 232px;
+	}
+	.radio {
+	    margin-left: 200px;
+	}
+
+}

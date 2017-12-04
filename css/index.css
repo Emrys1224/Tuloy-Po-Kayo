@@ -1,0 +1,60 @@
+﻿h2 {
+	color: #555;
+	font-size: 23px;
+	margin-bottom: 15px;
+}
+
+button[type=submit] {
+	float: right;
+}
+
+select {
+	-moz-appearance: none;
+}
+
+hr {
+	margin: 30px auto;
+}
+
+.label-lg {
+	color: #555;
+	font-size: 20px;
+}
+
+.nav-separator {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+
+#content {
+	margin: 0 auto;
+	margin-bottom: 0;
+	max-width: 800px;
+}
+#btn-search {
+	float: right;
+    position: relative;
+    top: -15px;
+}
+
+#reg-owner {
+	text-align: center;
+}
+
+@media (min-width: 768px) {
+	button[type=submit] {
+		position: relative;
+		top: -12px;
+		left: -2px;
+	}
+	.nav-separator {
+		display: none;
+	}
+}
+@media (max-width: 767px) {
+	#btn-search {
+		margin-top: 30px;
+	}
+}
