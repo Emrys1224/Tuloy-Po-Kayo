@@ -4,10 +4,21 @@ session_start();
 // for test only
 $testArr = array();
 
+$pageTitle = "Home";
+
 require_once 'core/init.php';
 require_once 'includes/acct-details.php';
 
 include 'includes/head.php';
+?>
+
+<!-- costum styles -->
+	<link href="css/signup-login-modal.css" rel="stylesheet" type="text/css">
+	<link href="css/index.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<?php
 
 if (!$id) {
 	include 'includes/signup-login-modal.php';
