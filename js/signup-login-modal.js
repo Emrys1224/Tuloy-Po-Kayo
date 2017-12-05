@@ -208,7 +208,7 @@ $('#btn-login').click(function(e){
 				url = curUrl.replace("?logout=1", "");
 			}
 			else {
-				url = "owner-profile.php";
+				url = "profile.php";
 			}
 				
 			// page redirect
