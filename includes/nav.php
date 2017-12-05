@@ -19,7 +19,7 @@
 		    <ul id="site-nav1" class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
 
-				<!-- modify nav -->
+				<!-- modify nav for login -->
 				<?php if (!$id): ?>
 					<li><a href="#" id="signin-nav-link" data-toggle="modal" data-target="#signup-login-modal">Register/Login</a></li>
 				<?php else: ?>
@@ -27,7 +27,11 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username"><?php echo $username; ?></span><span class="caret"></span></a>
 						<!-- profile links dropdown-->
 						<ul class="dropdown-menu">
-							<li><a href="#" id="link-profile">Profile</a></li>
+							<!-- modify according to account type -->
+							<?php if ($acctType === "Owner"): ?>
+								<li><a href="#" id="link-properties">Properties</a></li>
+							<?php  endif; ?>
+							<li><a href="profile.php" id="link-profile">Profile</a></li>
 							<li><a href="#" id="link-message">Messages</a></li>
 							<li><a href="?logout=1" id="logout">Logout</a></li>
 						</ul>
