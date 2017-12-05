@@ -32,6 +32,10 @@ select {
 	-moz-appearance: none;
 }
 
+main .nav-tabs {
+    border-bottom: 1px solid #b9b9b9;
+}
+
 .tab-content {
 	padding-top: 15px; 
 }
