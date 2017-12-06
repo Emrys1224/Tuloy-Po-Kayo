@@ -1,0 +1,58 @@
+﻿.modal {
+	padding: 0 !important;
+}
+
+.modal-content {
+	max-width: 475px;
+	margin: 0 auto;
+    top: 100px;
+}
+
+.modal-header {
+	text-align: right;
+	border-bottom: none;
+    padding: 10px;
+    padding-bottom: 0;;
+}
+
+.modal-body {
+	text-align: center;
+	padding: 5px 17px;
+}
+
+.modal-body p {
+	margin: 0;
+}
+
+.modal-footer {
+	border-top: none;
+    padding: 20px 70px;
+}
+
+#del-pic-modal .modal-footer {
+	padding: 20px 90px;
+}
+
+#btn-del-acct, #btn-del-pic-confirm, #btn-del-property-confirm {
+	float: left;
+}
+
+#del-confirmation {
+	padding: 40px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

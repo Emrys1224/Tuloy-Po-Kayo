@@ -1,0 +1,79 @@
+.row {
+	margin: 0;
+}
+
+.info-group {
+	border-bottom: 1px solid #b9b9b9;
+	padding-top: 10px;
+	padding-bottom: 7px; 
+}
+
+.input-group {
+	width: 100%;
+	border-bottom: 1px solid #DDD;
+	padding: 3px 0;
+}
+
+.input-group label {
+	position: relative;
+	top: 10px;
+}
+
+.form-control {
+	height: inherit;
+	padding: 3px 8px !important;
+	border-radius: 4px !important;
+	margin: 5px !important;
+}
+
+h4.info-group {
+	padding-top: 0;
+	padding-bottom: 20px;
+	margin-bottom: 0;
+}
+
+.col-xs-9 span {
+	word-wrap: break-word;
+}
+
+#content {
+	max-width: 800px;
+	padding-top: 15px;
+	margin: 0 auto;
+}
+
+#btn-group {
+	margin: 15px 0;
+}
+
+#btn-edit-settings {
+	float: right;
+}
+
+#btn-save{
+	display: block;
+	margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+	.input-group label {
+		position: relative;
+		top: 5px;
+	}
+	#content {
+		padding-top: 5px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
