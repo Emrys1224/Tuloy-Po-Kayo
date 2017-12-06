@@ -14,20 +14,14 @@ if (array_key_exists("logout", $_GET)) {
 
 if (array_key_exists("id", $_COOKIE) AND $_COOKIE['id']) {
 	$_SESSION['id'] = $_COOKIE['id'];
-
-	// test only
-	$testArr["coockie_id"] = $_COOKIE['id'];
 }
 
 if (array_key_exists("id", $_SESSION) AND $_SESSION['id']) {
 	// set account details
 	$id = $_SESSION['id'];
-	$acctDetails = $db->query("SELECT `firstname`, `status` FROM `account` WHERE `id` = '$id'")->fetch();
-	$username = $acctDetails['firstname'];
+	$acctDetails = $db->query("SELECT CONCAT(`firstname`, ' ', `lastname`) AS `name`, `status` FROM `account` WHERE `id` = '$id'")->fetch();
+	$username = $acctDetails['name'];
 	$acctType = $acctDetails['status'];
-
-	// test only
-	$testArr["session_id"] = $id;
 }
 
  ?>
