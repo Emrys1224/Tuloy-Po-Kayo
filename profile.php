@@ -14,6 +14,11 @@ if (!$id) {
     header("Location: http://localhost/Tuloy-Po-Kayo");
 }
 
+// retrieve profile info
+$acctInfo = $db->query("SELECT * FROM `account` WHERE `id` = '$id'")->fetch();
+$testArr = $acctInfo;
+
+
 include 'includes/head.php';
 ?>
 
@@ -38,7 +43,7 @@ include 'includes/nav.php';
 				<?php if ($acctType === "Owner"): ?>
 					<li role="presentation" class="active"><a href="#properties" id="properties-tab" role="tab" data-toggle="tab" aria-controls="properties" aria-expanded="true">Properties</a></li>
 				<?php endif; ?>
-				<li role="presentation" <?php if ($acctType !== "Owner") echo 'class="active"'; ?>><a href="#profile" id="profile-tab" role="tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Profile</a></li> 
+				<li role="presentation" class="<?php if ($acctType !== 'Owner') echo 'active'; ?>"><a href="#profile" id="profile-tab" role="tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Profile</a></li> 
 				<li role="presentation"><a href="#messages" role="tab" id="messages-tab" data-toggle="tab" aria-controls="messages">Messages</a></li>
 			</ul>
 
@@ -56,7 +61,7 @@ include 'includes/nav.php';
 				<?php endif; ?>
 				
 				<!-- profile-tab contents -->
-				<div class="tab-pane fade" role="tabpanel" id="profile" aria-labelledby="profile-tab">
+				<div class="tab-pane fade <?php if ($acctType !== 'Owner') echo 'in active'; ?>" role="tabpanel" id="profile" aria-labelledby="profile-tab">
 					
 					<!-- acct settings view mode -->
 					<div id="acct-settings-view">
@@ -64,32 +69,32 @@ include 'includes/nav.php';
 						<div class="row info-group">
 							<label class="col-xs-3" for="acct-name">Name</label>
 							<div class="col-xs-9" id="acct-name">
-								<span id="name-first" data-name="firstName"></span>  
-								<span id="name-last" data-name="lstName"></span>
+								<span id="name-first"><?php echo $acctInfo['firstname']; ?></span>  
+								<span id="name-last"><?php echo $acctInfo['lastname']; ?></span>
 							</div>
 						</div>
 						<div class="row info-group">
 							<label class="col-xs-3" for="email">Email</label>
 							<div class="col-xs-9">
-								<span id="email" data-name="email"></span>
+								<span id="email"><?php echo $acctInfo['email']; ?></span>
 							</div>
 						</div>
 						<div class="row info-group">
 							<label class="col-xs-3" for="linked-acct">Linked Account</label>
 							<div class="col-xs-9">
-								<span id="linked-acct" data-name="linkedAcct"></span>
+								<span id="linked-acct"><?php echo isset($acctInfo['linked_acct']) ? $acctInfo['linked_acct'] : "No account linked"; ?></span>
 							</div>
 						</div>
 						<div class="row info-group">
 							<label class="col-xs-3" for="phone">Phone Number</label>
 							<div class="col-xs-9">
-								<span id="phone" data-name="phone"></span>
+								<span id="phone"><?php echo isset($acctInfo['contact_number']) ? $acctInfo['contact_number'] : "No contact number provided"; ?></span>
 							</div>
 						</div>
 						<div class="row info-group">
 							<label class="col-xs-3" for="password">Password</label>
 							<div class="col-xs-9">
-								<span id="password" data-name="password"></span>
+								<span id="password"></span>
 							</div>
 						</div>
 						<div id="btn-group" class="clearfix">
@@ -104,28 +109,28 @@ include 'includes/nav.php';
 						<div class="row input-group">
 							<label class="col-sm-3" for="edit-acct-name">Name</label>
 							<div class="col-sm-4" id="edit-acct-name">
-								<input type="text" class="form-control" id="edit-1st-name" name="firstName">
+								<input type="text" class="form-control" id="edit-1st-name" name="firstName" value="<?php echo $acctInfo['firstname']; ?>">
 							</div>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="edit-lst-name" name="lstName">
+								<input type="text" class="form-control" id="edit-lst-name" name="lastName" value="<?php echo $acctInfo['lastname']; ?>">
 							</div>
 						</div>
 						<div class="row input-group">
 							<label class="col-sm-3" for="edit-email">Email</label>
 							<div class="col-sm-6">
-								<input type="email" class="form-control" id="edit-email" name="email">
+								<input type="email" class="form-control" id="edit-email" name="email" value="<?php echo $acctInfo['email']; ?>">
 							</div>
 						</div>
 						<div class="row input-group">
 							<label class="col-sm-3" for="edit-linked-acct">Linked Account</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="edit-linked-acct" name="linkedAcct" placeholder="Link to your social media acct">
+								<input type="text" class="form-control" id="edit-linked-acct" name="linkedAcct" placeholder="Link to your social media acct" value="<?php echo $acctInfo['linked_acct']; ?>">
 							</div>
 						</div>
 						<div class="row input-group">
 							<label class="col-sm-3" for="edit-phone">Phone Number</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="edit-phone" name="phone" placeholder="Phone number e.g. +63912-345-6789">
+								<input type="text" class="form-control" id="edit-phone" name="phone" placeholder="Phone number e.g. +63912-345-6789" value="<?php echo $acctInfo['contact_number']; ?>">
 							</div>
 						</div>
 						<div class="row input-group">
