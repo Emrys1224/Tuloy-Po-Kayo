@@ -24,7 +24,7 @@
 					<li><a href="#" id="signin-nav-link" data-toggle="modal" data-target="#signup-login-modal">Register/Login</a></li>
 				<?php else: ?>
 					<li id="acct-nav-link" class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username"><?php echo $username; ?></span><span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username"><?= $username ?></span><span class="caret"></span></a>
 						<!-- profile links dropdown-->
 						<ul class="dropdown-menu">
 							<!-- modify according to account type -->

@@ -115,9 +115,9 @@ include 'includes/nav.php';
 	// });
 	
     var testArr = new Array();
-    <?php foreach($testArr as $key => $val){ ?>
+    <?php foreach($testArr as $key => $val): ?>
         testArr.push(<?php echo "{'$key':'$val'}"; ?>);
-    <?php } ?>
+    <?php endforeach; ?>
 
 	console.log(testArr)
 </script>
