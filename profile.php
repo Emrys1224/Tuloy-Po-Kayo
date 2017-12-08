@@ -16,15 +16,36 @@ if (!$id) {
 
 // retrieve profile info
 $acctInfo = $db->query("SELECT * FROM `account` WHERE `id` = '$id'")->fetch();
-$testArr = $acctInfo;
 
+// retrieve list of properties owned
+$propertyList = array();
+if ($acctInfo['status'] === "Owner") {
+	$properties = $db->query("SELECT `name`, `unit_number`, `street`, `purok`, `barangay`, `municipality`, `province` FROM `rental_unit` WHERE `owner_id` = '$id'");
+
+	while ($property = $properties->fetch()) {
+		$temp = array();
+		$temp['name'] = $property['name'];
+		
+		// build address
+		$address = "";
+		foreach ($property as $key => $value) {
+			if ($key !== "name" && isset($value)) {
+				$address .= $value.", ";
+			}
+		}
+		$temp['address'] = substr($address, 0, -2); // remove the comma and space at the end
+
+		$propertyList[] = $temp;
+	}
+}
 
 include 'includes/head.php';
 ?>
 
 <!-- costum styles -->
-	<link href="css/profile.css" rel="stylesheet" type="text/css">
 	<link href="css/del-acct-modal.css" rel="stylesheet" type="text/css">
+	<link href="css/profile.css" rel="stylesheet" type="text/css">
+	<link href="css/properties.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -40,23 +61,45 @@ include 'includes/nav.php';
 
 			<!-- content tabs -->
 			<ul class="nav nav-tabs" id="renter-page-tabs" role="tablist">
+
+				<!-- property tab -->
 				<?php if ($acctType === "Owner"): ?>
 					<li role="presentation" class="active"><a href="#properties" id="properties-tab" role="tab" data-toggle="tab" aria-controls="properties" aria-expanded="true">Properties</a></li>
 				<?php endif; ?>
+
 				<li role="presentation" class="<?= $acctType !== 'Owner' ? 'active' : '' ?>"><a href="#profile" id="profile-tab" role="tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Profile</a></li> 
 				<li role="presentation"><a href="#messages" role="tab" id="messages-tab" data-toggle="tab" aria-controls="messages">Messages</a></li>
 			</ul>
 
 			<div class="tab-content"> 
 				
-				<?php if ($acctType === "Owner"): ?>
 				<!-- properties-tab contents -->
+				<?php if ($acctType === "Owner"): ?>
 				<div class="tab-pane fade in active" role="tabpanel" id="properties" aria-labelledby="properties-tab">
 					<div id="properties-list">
-						<h3>No listed property to display.</h3>
+
+						<?php if (empty($propertyList)): ?>
+							<h3>No listed property to display.</h3>
+						<?php else: ?>
+							<?php foreach ($propertyList as $property): ?>
+								<div class="list-item row">
+									<div class="col-sm-10">
+										<h4>
+											<a href="rental-unit-mngt-page.php"><?= $property['name'] ?></a>
+										</h4>
+										<p><?= $property['address'] ?></p>
+									</div>
+									<div class="btn-group-property col-sm-2">
+										<button type="button" class="btn btn-warning btn-xs btn-del-property">Delete</button>
+										<a href="rental-unit-mngt-page.php" class="btn btn-info btn-xs btn-edit-property">Edit</a>
+									</div>
+								</div>
+							<?php endforeach; ?>
+						<?php endif; ?>
+
 					</div>
 					<!-- <button type="button" class="btn btn-primary" id="btn-add-property">Add Property</button> -->
-					<a href="rental-unit-mngt-page(JuanNew).html" class="btn btn-primary" id="btn-add-property">Add Property</a>
+					<a href="rental-unit-mngt-page.php" class="btn btn-primary" id="btn-add-property">Add Property</a>
 				</div> <!-- #properties -->
 				<?php endif; ?>
 				
