@@ -91,6 +91,16 @@ include 'includes/nav.php';
 								<span id="phone"><?php echo isset($acctInfo['contact_number']) ? $acctInfo['contact_number'] : "No contact number provided"; ?></span>
 							</div>
 						</div>
+
+						<?php if ($acctInfo['status'] !== "Owner"): ?>
+							<div class="row info-group">
+								<label class="col-xs-3" for="status">Status</label>
+								<div class="col-xs-9">
+									<span id="status"><?php echo $acctInfo['status']; ?></span>
+								</div>
+							</div>
+						<?php endif; ?>
+
 						<div class="row info-group">
 							<label class="col-xs-3" for="password">Password</label>
 							<div class="col-xs-9">
@@ -133,6 +143,22 @@ include 'includes/nav.php';
 								<input type="text" class="form-control" id="edit-phone" name="phone" placeholder="Phone number e.g. +63912-345-6789" value="<?php echo $acctInfo['contact_number']; ?>">
 							</div>
 						</div>
+
+						<?php if ($acctInfo['status'] !== "Owner"): ?>
+							<div class="row input-group">
+								<label class="col-sm-3" for="edit-status">Status</label>
+								<div class="col-sm-6">
+									<select id="price-from" class="form-control" name="status">
+										<?php
+										$options = array("Anonymous", "Student", "Worker");
+										foreach($options as $option): ?>
+											<option <?= $acctInfo['status'] === $option ? 'selected="selected"' : '' ?>><?= $option ?></option>
+										<?php endforeach; ?>
+									</select>
+								</div>
+							</div>
+						<?php endif; ?>
+
 						<div class="row input-group">
 							<label class="col-sm-3" for="edit-password">Password</label>
 							<div class="col-sm-6">
