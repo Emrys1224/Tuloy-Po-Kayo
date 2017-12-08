@@ -1,0 +1,27 @@
+.btn-group-property, .col-sm-10 {
+	padding: 0 !important;
+}
+
+.btn-edit-property {
+	color: #FFF !important;
+	width: 46px;
+	float: right;
+}
+
+#btn-add-property {
+	margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+	.btn-group-property {
+		position: relative;
+		top: 25px;
+	}
+}
+
+
+@media (max-width: 767px) {
+	#properties {
+		min-height: 60vh;
+	}
+}
