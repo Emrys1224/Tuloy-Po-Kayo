@@ -8,5 +8,5 @@ $('#btn-del-acct').on('click', function() {
 })
 
 function redirectToHome() {
-	window.location.replace('index.html');
+	window.location.replace('http://localhost/Tuloy-Po-Kayo');
 }

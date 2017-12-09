@@ -19,7 +19,7 @@ $acctInfo = $db->query("SELECT * FROM `account` WHERE `id` = '$id'")->fetch();
 
 // retrieve list of properties owned
 $propertyList = array();
-if ($acctInfo['status'] === "Owner") {
+if ($acctType === "Owner") {
 	$properties = $db->query("SELECT `name`, `unit_number`, `street`, `purok`, `barangay`, `municipality`, `province` FROM `rental_unit` WHERE `owner_id` = '$id'");
 
 	while ($property = $properties->fetch()) {
@@ -51,6 +51,9 @@ include 'includes/head.php';
 
 <?php
 include 'includes/acct-del.php';
+if ($acctType === "Owner") {
+	include 'includes/del-property.php';
+}
 include 'includes/nav.php';
  ?>
 
@@ -62,7 +65,7 @@ include 'includes/nav.php';
 			<!-- content tabs -->
 			<ul class="nav nav-tabs" id="renter-page-tabs" role="tablist">
 
-				<!-- property tab -->
+				<!-- properties-tab -->
 				<?php if ($acctType === "Owner"): ?>
 					<li role="presentation" class="active"><a href="#properties" id="properties-tab" role="tab" data-toggle="tab" aria-controls="properties" aria-expanded="true">Properties</a></li>
 				<?php endif; ?>
@@ -75,32 +78,32 @@ include 'includes/nav.php';
 				
 				<!-- properties-tab contents -->
 				<?php if ($acctType === "Owner"): ?>
-				<div class="tab-pane fade in active" role="tabpanel" id="properties" aria-labelledby="properties-tab">
-					<div id="properties-list">
+					<div class="tab-pane fade in active" role="tabpanel" id="properties" aria-labelledby="properties-tab">
+						<div id="properties-list">
 
-						<?php if (empty($propertyList)): ?>
-							<h3>No listed property to display.</h3>
-						<?php else: ?>
-							<?php foreach ($propertyList as $property): ?>
-								<div class="list-item row">
-									<div class="col-sm-10">
-										<h4>
-											<a href="rental-unit-mngt-page.php"><?= $property['name'] ?></a>
-										</h4>
-										<p><?= $property['address'] ?></p>
+							<?php if (empty($propertyList)): ?>
+								<h3>No listed property to display.</h3>
+							<?php else: ?>
+								<?php foreach ($propertyList as $property): ?>
+									<div class="list-item row">
+										<div class="col-sm-10">
+											<h4>
+												<a href="rental-unit-mngt-page.php"><?= $property['name'] ?></a>
+											</h4>
+											<p><?= $property['address'] ?></p>
+										</div>
+										<div class="btn-group-property col-sm-2">
+											<button type="button" class="btn btn-warning btn-xs btn-del-property" data-toggle="modal" data-target="#del-property-modal">Delete</button>
+											<a href="rental-unit-mngt-page.php" class="btn btn-info btn-xs btn-edit-property">Edit</a>
+										</div>
 									</div>
-									<div class="btn-group-property col-sm-2">
-										<button type="button" class="btn btn-warning btn-xs btn-del-property">Delete</button>
-										<a href="rental-unit-mngt-page.php" class="btn btn-info btn-xs btn-edit-property">Edit</a>
-									</div>
-								</div>
-							<?php endforeach; ?>
-						<?php endif; ?>
+								<?php endforeach; ?>
+							<?php endif; ?>
 
-					</div>
-					<!-- <button type="button" class="btn btn-primary" id="btn-add-property">Add Property</button> -->
-					<a href="rental-unit-mngt-page.php" class="btn btn-primary" id="btn-add-property">Add Property</a>
-				</div> <!-- #properties -->
+						</div>
+						<!-- <button type="button" class="btn btn-primary" id="btn-add-property">Add Property</button> -->
+						<a href="rental-unit-mngt-page.php" class="btn btn-primary" id="btn-add-property">Add Property</a>
+					</div> <!-- #properties -->
 				<?php endif; ?>
 				
 				<!-- profile-tab contents -->
@@ -135,7 +138,7 @@ include 'includes/nav.php';
 							</div>
 						</div>
 
-						<?php if ($acctInfo['status'] !== "Owner"): ?>
+						<?php if ($acctType !== "Owner"): ?>
 							<div class="row info-group">
 								<label class="col-xs-3" for="status">Status</label>
 								<div class="col-xs-9">
@@ -187,16 +190,18 @@ include 'includes/nav.php';
 							</div>
 						</div>
 
-						<?php if ($acctInfo['status'] !== "Owner"): ?>
+						<?php if ($acctType !== "Owner"): ?>
 							<div class="row input-group">
 								<label class="col-sm-3" for="edit-status">Status</label>
 								<div class="col-sm-6">
 									<select id="price-from" class="form-control" name="status">
+
 										<?php
 										$options = array("Anonymous", "Student", "Worker");
 										foreach($options as $option): ?>
 											<option <?= $acctInfo['status'] === $option ? 'selected="selected"' : '' ?>><?= $option ?></option>
 										<?php endforeach; ?>
+
 									</select>
 								</div>
 							</div>
@@ -240,12 +245,6 @@ include 'includes/nav.php';
 
 <!-- for test oonly -->
 <script type="text/javascript">
-	// select a tab (signup-login-modal)
-	// $('#signup-login-tabs a').click(function (e) {
-	// 	e.preventDefault()
-	// 	$(this).tab('show');
-	// });
-	
     var testArr = new Array();
     <?php foreach($testArr as $key => $val): ?>
         testArr.push(<?php echo "{'$key':'$val'}"; ?>);
@@ -255,7 +254,8 @@ include 'includes/nav.php';
 </script>
 
 <script src="js/common.js" type="text/javascript"></script>
-<script src="js/profile.js" type="text/javascript"></script>
 <script src="js/del-acct-modal.js" type="text/javascript"></script>
+<script src="js/properties.js" type="text/javascript"></script>
+<script src="js/profile.js" type="text/javascript"></script>
 </body>
 </html>
