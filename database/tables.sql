@@ -110,7 +110,10 @@ CREATE TABLE message (
 	PRIMARY KEY 		(id),
 	CONSTRAINT 			`fk_conversation`
 		FOREIGN KEY (conversation_id) REFERENCES conversation (id)
-		ON UPDATE CASCADE ON DELETE CASCADE
+		ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT 			`fk_sender`
+		FOREIGN KEY (sender) REFERENCES account (id)
+		ON UPDATE CASCADE
 );
 
 /* Table 1 ver 2 */
@@ -126,7 +129,7 @@ CREATE TABLE message_ver2 (
 	 * parehas na DELETEd ung account?
 	 */
 
-	CONSTRAINT 			`fk_sender`
+	CONSTRAINT 			`fk_sender1`
 		FOREIGN KEY (sender) REFERENCES account (id)
 		ON UPDATE CASCADE,
 	CONSTRAINT 			`fk_recipient`
