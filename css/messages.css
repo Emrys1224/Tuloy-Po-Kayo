@@ -1,0 +1,125 @@
+﻿.list-item {
+	padding: 5px 0;
+	border-bottom: 1px solid #B9B9B9;
+}
+
+.list-item  h4 {
+	color: #555;
+	margin-bottom: 0;
+}
+
+.list-item  h4:hover, .list-item  a:hover {
+	color: #111;
+}
+
+.list-item  a {
+	color: #555;
+	text-decoration: none;
+}
+
+.list-item p, #msgs-header p {
+	color: #777;
+	margin-bottom: 5px;
+}
+
+.sender, .recipient {
+	max-width: 400px;
+	display: table;
+	padding: 10px;
+	border: 1px solid #555;
+	border-radius: 10px;
+	margin: 10px 0;
+}
+
+.sender {
+	background-color: #FEFEFE;
+	float: right;
+	border-bottom-right-radius: 0;
+	margin-right: 3px;
+}
+
+.recipient {
+	background-color: #D5F4FF;
+	border-top-left-radius: 0;
+}
+
+#messages {
+	height: 68vh;
+	position: relative;
+}
+
+#messages-list {
+	height: 100%;
+	overflow-y: auto;
+}
+
+#messages-view {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+#msgs-header {
+	border-bottom: 1px solid #DDD;
+}
+
+#msgs-body {
+	background: #FBFBFB;
+	flex: 1;
+	overflow-y: auto;
+}
+
+#msgs-footer {
+	display: flex;
+	flex-direction: row;
+	padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+#messages-list h4 {
+	display: inline-block;
+	cursor: pointer;
+}
+
+#close-btn{
+    color: #AAA;
+	float: right;
+    position: relative;
+    top: 10px;
+    left: -2px;
+    cursor: pointer;
+}
+
+#close-btn:hover {
+	color: #777;
+}
+
+#btn-msg-send {
+	font-size: 20px;
+	margin-left: 5px;
+}
+
+#msgs-header h4 {
+	color: #5A5A5A !important;
+	margin-bottom: 0;
+}
+
+#msgs-footer textarea {
+	flex: 1;
+	resize: none;
+	border: 1px solid #888;
+}
+
+@media (max-width: 767px) {
+	.renter, .owner {
+		max-width: 250px;
+	}
+}
+
+
+
+
+
+
+
+
