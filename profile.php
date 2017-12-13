@@ -39,13 +39,27 @@ if ($acctType === "Owner") {
 	}
 }
 
+// retrieve conversations list
+$convList = array();
+$convSelf = $acctType === "Owner" ? "owner_id" : "tenant_id";
+$convWith = $acctType === "Owner" ? "tenant_id" : "owner_id";
+$convIds = $db->query("SELECT `id`, `$convWith` FROM `conversation` WHERE `$convSelf` = '$id'");
+while ($convId = $convIds->fetch()) {
+	$temp = array();
+	$temp['convId'] = $convId['id'];
+	$temp['convWith'] = $db->query("SELECT CONCAT(`firstname`, ' ', `lastname`) AS `name` FROM `account` WHERE `id` = '".$convId[$convWith]."'")->fetchColumn();
+
+	$convList[] = $temp;
+}
+
 include 'includes/head.php';
 ?>
 
 <!-- costum styles -->
 	<link href="css/del-acct-modal.css" rel="stylesheet" type="text/css">
-	<link href="css/profile.css" rel="stylesheet" type="text/css">
 	<link href="css/properties.css" rel="stylesheet" type="text/css">
+	<link href="css/profile.css" rel="stylesheet" type="text/css">
+	<link href="css/messages.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -228,7 +242,28 @@ include 'includes/nav.php';
 				
 				<!-- messages tab content -->
 				<div class="tab-pane fade" role="tabpanel" id="messages" aria-labelledby="messages-tab">
-					<h3>You currently have no message to be displayed.</h3>
+					<div id="messages-list">
+						<?php if (empty($convList)): ?>
+							<h3>You currently have no message to be displayed.</h3>
+						<?php else: ?>
+							<?php foreach ($convList as $conversation): ?>
+								<div class="list-item" data-convId="<?= $conversation['convId'] ?>"><h4><?= $conversation['convWith'] ?></h4></div>
+							<?php endforeach; ?>
+						<?php endif; ?>
+					</div>
+
+					<div id="messages-view">
+						<div class="clearfix" id="msgs-header">
+							<i class="fa fa-window-close-o" id="close-btn"></i>
+							<h4></h4>
+							<p></p>
+						</div>
+						<div id="msgs-body"></div>
+						<div id="msgs-footer">
+							<textarea rows="2" placeholder="Write message..."></textarea>
+							<button class="btn btn-primary btn-sm" id="btn-msg-send"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+						</div>
+					</div> <!-- #messages-view -->
 				</div>
 
 			</div> <!-- .tab-content -->
@@ -257,5 +292,6 @@ include 'includes/nav.php';
 <script src="js/del-acct-modal.js" type="text/javascript"></script>
 <script src="js/properties.js" type="text/javascript"></script>
 <script src="js/profile.js" type="text/javascript"></script>
+<script src="js/messages.js" type="text/javascript"></script>
 </body>
 </html>
