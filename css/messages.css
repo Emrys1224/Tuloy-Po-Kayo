@@ -22,7 +22,7 @@
 	margin-bottom: 5px;
 }
 
-.sender, .recipient {
+.self, .other {
 	max-width: 400px;
 	display: table;
 	padding: 10px;
@@ -31,14 +31,14 @@
 	margin: 10px 0;
 }
 
-.sender {
+.self {
 	background-color: #FEFEFE;
 	float: right;
 	border-bottom-right-radius: 0;
 	margin-right: 3px;
 }
 
-.recipient {
+.other {
 	background-color: #D5F4FF;
 	border-top-left-radius: 0;
 }
