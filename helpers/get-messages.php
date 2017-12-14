@@ -34,10 +34,8 @@ if ($_POST) {
 		$messages[$index] = $temp;
 	}
 
+	// return array as json
 	echo json_encode($messages);
-}
-else {
-	echo "Something went wrong";
 }
 
 ?>
