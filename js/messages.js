@@ -3,8 +3,10 @@ $('#messages-view').hide()
 
 // view conversations
 $('#messages-list h4').on('click', function() {
-	// var index = $(this).parent().data('index');
-	// displayMessages(index);
+	var convId = $(this).parent().data('conv_id');
+	console.log(convId);
+
+	getMessages({convId: convId});
 
 	toggleView($('#messages-list'), $('#messages-view'), function() {
 		$('#msgs-body').scrollTop($('#msgs-body').prop('scrollHeight'))
@@ -17,3 +19,13 @@ $('#messages-list h4').on('click', function() {
 $('#close-btn').on('click', function() {
 	toggleView($('#messages-view'), $('#messages-list'));
 })
+
+function getMessages(convWith) {
+	var url = "helpers/get-messages.php";
+
+	$.post(url, convWith, function(response) {
+		resp = response;
+
+		alert(response);
+	});
+}

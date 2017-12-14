@@ -44,6 +44,7 @@ $convList = array();
 $convSelf = $acctType === "Owner" ? "owner_id" : "tenant_id";
 $convWith = $acctType === "Owner" ? "tenant_id" : "owner_id";
 $convIds = $db->query("SELECT `id`, `$convWith` FROM `conversation` WHERE `$convSelf` = '$id'");
+
 while ($convId = $convIds->fetch()) {
 	$temp = array();
 	$temp['convId'] = $convId['id'];
@@ -247,7 +248,7 @@ include 'includes/nav.php';
 							<h3>You currently have no message to be displayed.</h3>
 						<?php else: ?>
 							<?php foreach ($convList as $conversation): ?>
-								<div class="list-item" data-convId="<?= $conversation['convId'] ?>"><h4><?= $conversation['convWith'] ?></h4></div>
+								<div class="list-item" data-conv_id="<?= $conversation['convId'] ?>"><h4><?= $conversation['convWith'] ?></h4></div>	<!-- data-convId cannot be used in jquery .data() method -->
 							<?php endforeach; ?>
 						<?php endif; ?>
 					</div>
