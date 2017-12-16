@@ -251,21 +251,21 @@ include 'includes/nav.php';
 								<div class="list-item" data-conv_id="<?= $conversation['convId'] ?>"><h4><?= $conversation['convWith'] ?></h4></div>	<!-- data-convId cannot be used in jquery .data() method -->
 							<?php endforeach; ?>
 						<?php endif; ?>
-					</div>
+					</div> <!-- #messages-list -->
 
 					<div id="messages-view">
 						<div class="clearfix" id="msgs-header">
 							<i class="fa fa-window-close-o" id="close-btn"></i>
 							<h4></h4>
 							<p></p>
-						</div>
+						</div> <!-- msgs-header -->
 						<div id="msgs-body"></div>
 						<div id="msgs-footer">
 							<textarea rows="2" placeholder="Write message..."></textarea>
 							<button class="btn btn-primary btn-sm" id="btn-msg-send"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-						</div>
+						</div> <!-- #msgs-footer -->
 					</div> <!-- #messages-view -->
-				</div>
+				</div> <!-- messages -->
 
 			</div> <!-- .tab-content -->
 
