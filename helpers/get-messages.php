@@ -7,9 +7,11 @@ require_once '../core/init.php';
 if ($_POST) {
 	$userId = $_SESSION['id'];
 	$convId = $_POST['convId'];
+	$oldestMsgId = $_POST['oldestMsgId'];
+	$andFrom = isset($oldestMsgId) ? "AND `id` < $oldestMsgId" : "";
 
-	// retrieve messages
-	$conversation = $db->query("SELECT * FROM `message` WHERE  `conversation_id` = '$convId'");
+	// retrieve the latest 5 messages or starting from the message id indicated
+	$conversation = $db->query("SELECT * FROM `message` WHERE `conversation_id` = $convId $andFrom ORDER BY `message`.`id` DESC LIMIT 5");
 
 	// save conversation in an array
 	$messages = array();
@@ -34,7 +36,7 @@ if ($_POST) {
 		$messages[$index] = $temp;
 	}
 
-	// return array as json
+	// return array in json format
 	echo json_encode($messages);
 }
 
