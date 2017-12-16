@@ -1,48 +1,87 @@
-﻿// hide the #messages-view
+﻿// holding variables
+var convId;
+var oldestMsgId;
+
+// get messages from database with ajax
+// @param reference of where the entry should start(conversation_id and/or message.id)
+// @param pos(position) of where the messages is to be appended ("after" for new display; "before" for loading the additional previous messages)
+function getMessages(reference, pos) {
+	var url = "helpers/get-messages.php";
+
+	// save result in an object and display accordingly
+	$.post(url, reference, function(messages) {
+		var msgIds = Object.keys(messages);
+		console.log(msgIds);
+		oldestMsgId = Array.min(msgIds);
+		dispMessages(messages, pos);
+	}, "json");
+}
+
+// add/display a message
+// @param messages array of messages
+// @param pos(position) of where the messages is to be appended ("after" for new display; "before" for loading the additional previous messages)
+function dispMessages(messages, pos) {
+	var dispMsg = '';
+
+	// build html
+	for (var msg in messages) {
+		var message = messages[msg];
+		dispMsg += '<div class="clearfix"><p class="'+message['sender']+'">'+message['content']+'</p></div>';
+	}
+
+	// insert into #msg-body
+	if (pos == "after") {
+		$('#msgs-body').append(dispMsg);
+
+		// toggle to #messages-view
+		toggleView($('#messages-list'), $('#messages-view'), function() {
+			$('#msgs-body').scrollTop($('#msgs-body').prop('scrollHeight'))
+		});
+	}
+	else if (pos == "before") {
+		// insert on top of #msgs-body
+		$(dispMsg).insertBefore('#msgs-body div:first-child');
+	}
+}
+
+// array prototype extension
+// returns the lowest value
+Array.min = function( array ){
+    return Math.min.apply( Math, array );
+};
+
+// hide the #messages-view
 $('#messages-view').hide()
-
-// view conversations
-$('#messages-list h4').on('click', function() {
-	// set the text for #msgs-header
-	$('#msgs-header h4').text($(this).text());
-
-	// get conversation Id
-	var convId = $(this).parent().data('conv_id');
-
-	// get and display the messages for the coresponding conversation
-	getMessages({convId: convId});
-
-	toggleView($('#messages-list'), $('#messages-view'), function() {
-		$('#msgs-body').scrollTop($('#msgs-body').prop('scrollHeight'))
-	});
-})
 
 // close conversations
 $('#close-btn').on('click', function() {
 	toggleView($('#messages-view'), $('#messages-list'));
 })
 
-// get messages from database with ajax
-function getMessages(convId) {
-	var url = "helpers/get-messages.php";
+// view conversations
+$('#messages-list h4').on('click', function() {
+	// set the text for #msgs-header
+	$('#msgs-header h4').text($(this).text());
 
-	// save result in an object and display accordingly
-	$.post(url, convId, function(response) {
-		var messages = response;
+	// remove the previous content of #msgs-body
+	$('#msgs-body').html('');
 
-		// remove the previus content of #msgs-body
-		$('#msgs-body').html('');
+	// get and display the messages for the coresponding conversation
+	convId = $(this).parent().data('conv_id');
+	getMessages({convId: convId}, "after");
+})
 
-		// display the messages
-		for (var msg in messages) {
-			dispMessages(messages[msg]);
-		}
+// add previous messages upon upon reaching the top
+$('#msgs-body').scroll(function() {
+	var scrollPos = $(this).scrollTop();
 
-	}, "json");
-}
+	// add 5 previous messages
+	if (scrollPos == 0) {
+		var ref = {
+			convId: convId,
+			oldestMsgId: oldestMsgId
+		};
+		getMessages(ref, "before");
+	}
+});
 
-// add/display a message
-function dispMessages(message) {
-	var dispMsg = '<div class="clearfix"><p class="'+message['sender']+'">'+message['content']+'</p></div>';
-	$('#msgs-body').append(dispMsg);
-}
