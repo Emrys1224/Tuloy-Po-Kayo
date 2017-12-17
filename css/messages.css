@@ -60,11 +60,15 @@
 }
 
 #msgs-header {
-	border-bottom: 1px solid #DDD;
+    background-color: #FDFDFD;
+    border-bottom: 2px solid #DDD;
+    border-radius: 5px 5px 0px 0px;
+    padding-bottom: 10px;
 }
 
 #msgs-body {
 	background: #FBFBFB;
+    padding: 0 10px 0 15px;
 	flex: 1;
 	overflow-y: auto;
 }
@@ -85,13 +89,20 @@
     color: #AAA;
 	float: right;
     position: relative;
-    top: 10px;
-    left: -2px;
+    top: 14px;
+    left: -10px;
     cursor: pointer;
 }
 
 #close-btn:hover {
 	color: #777;
+}
+
+#end-of-msgs {
+    color: #6095ff;
+    font-weight: bold;
+    text-align: center;
+    margin: 15px auto 5px;
 }
 
 #btn-msg-send {
@@ -101,6 +112,7 @@
 
 #msgs-header h4 {
 	color: #5A5A5A !important;
+    text-align: center;
 	margin-bottom: 0;
 }
 
