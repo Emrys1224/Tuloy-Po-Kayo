@@ -257,7 +257,6 @@ include 'includes/nav.php';
 						<div class="clearfix" id="msgs-header">
 							<i class="fa fa-window-close-o" id="close-btn"></i>
 							<h4></h4>
-							<p></p>
 						</div> <!-- msgs-header -->
 						<div id="msgs-body"></div>
 						<div id="msgs-footer">
