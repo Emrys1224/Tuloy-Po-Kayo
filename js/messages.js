@@ -9,24 +9,22 @@ function getMessages(reference) {
 	var url = "helpers/get-messages.php";
 
 	// save result in an object and display accordingly
-	$.post(url, reference, function(messages) {
-		var msgIds = Object.keys(messages);
-
-		dispMessages(messages);
-	}, "json");
+	$.post(url, reference, function(messages) { dispMessages(messages) }, "json");
 }
 
 // add/display a message
 // @param messages array of messages
 function dispMessages(messages) {
-	if (!jQuery.isEmptyObject(messages)) {
-		var msgIds = Object.keys(messages);
+	var msgIds = Object.keys(messages);
+	var msgLength = msgIds.length;
+
+	if (msgLength) {
 		var dispMsg = "";
 		var emptyBody = $('#msgs-body').html() == "" ? true : false;
 		var prevScrollHeight = $('#msgs-body').prop('scrollHeight');
 
 		// loop inreverse
-		for (var i = msgIds.length; i-- > 0;) {
+		for (var i = msgLength; i-- > 0;) {
 			var message = messages[msgIds[i]];
 			var thisDateTime = message['date_time'];
 			dispMsg = '<div class="clearfix"><p class="'+message['sender']+'" data-date_time="'+thisDateTime+'">'+message['content']+'</p></div>';
@@ -56,14 +54,15 @@ function dispMessages(messages) {
 		}
 
 		// scroll to end of the added messages
-		var newScrollPos = $('#msgs-body').prop('scrollHeight') - prevScrollHeight - 50;
+		var newScrollPos = $('#msgs-body').prop('scrollHeight') - prevScrollHeight;
 		$('#msgs-body').scrollTop(newScrollPos);
 
 		// track the oldest message
 		oldestMsgId = msgIds.length > 0 ? Array.min(msgIds) : null;
 	}
-	else {
-		// insert on top of #msgs-body a notice
+	
+	if (msgLength < 5) {
+		// insert on the very last message a notice
 		dispMsg = '<div class="clearfix"><p id="end-of-msgs">No more messages to display</p></div>';
 		$(dispMsg).insertBefore('#msgs-body div:first-child');
 
@@ -74,22 +73,22 @@ function dispMessages(messages) {
 // check if same date as the previous message
 // @param dayA, dayB dates to compare
 function isSameDate(dayA, dayB) {
-	return dayA.substring(0,10) == dayB.substring(0,10) ? true : false;
+	return dayA.substring(0,10) == dayB.substring(0,10);
 }
 
 // get the difference of days from now
-// @param date to compare
-function getDaysToNow(date) {
+// @param datetime to compare
+function getDaysToNow(datetime) {
 	var today = new Date(Date.now());
-	var diff_ms = today - date;
+	var diff_ms = today - datetime;
 	return Math.round(diff_ms/ONE_DAY_MS);
 }
 
 // get time (HH:MM) in 12 hour format
-// @param date to get the time from
-function formatAMPM(date) {
-	var hours = date.getHours();
-	var minutes = date.getMinutes();
+// @param datetime to get the time from
+function formatAMPM(datetime) {
+	var hours = datetime.getHours();
+	var minutes = datetime.getMinutes();
 	var ampm = hours >= 12 ? 'pm' : 'am';
 	hours = hours % 12;
 	hours = hours ? hours : 12; // the hour '0' should be '12'
