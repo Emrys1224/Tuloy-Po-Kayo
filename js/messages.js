@@ -3,12 +3,6 @@ var convId;
 var oldestMsgId;
 var noMoreMsgs = false;
 
-// array prototype extension
-// returns the lowest value
-Array.min = function( array ){
-    return Math.min.apply( Math, array );
-};
-
 // get messages from database with ajax
 // @param reference of where the entry should start(conversation_id and/or message.id)
 function getMessages(reference) {
@@ -17,8 +11,6 @@ function getMessages(reference) {
 	// save result in an object and display accordingly
 	$.post(url, reference, function(messages) {
 		var msgIds = Object.keys(messages);
-		// track the oldest message
-		oldestMsgId = msgIds.length > 0 ? Array.min(msgIds) : null;
 
 		dispMessages(messages);
 	}, "json");
@@ -28,15 +20,16 @@ function getMessages(reference) {
 // @param messages array of messages
 function dispMessages(messages) {
 	if (!jQuery.isEmptyObject(messages)) {
-		var keys = Object.keys(messages);
+		var msgIds = Object.keys(messages);
 		var dispMsg = "";
 		var emptyBody = $('#msgs-body').html() == "" ? true : false;
 		var prevScrollHeight = $('#msgs-body').prop('scrollHeight');
 
 		// loop inreverse
-		for (var i = keys.length; i-- > 0;) {
-			var message = messages[keys[i]];
-			dispMsg = '<div class="clearfix"><p class="'+message['sender']+' data-date_time="'+message['date_time']+'">'+message['content']+'</p></div>';
+		for (var i = msgIds.length; i-- > 0;) {
+			var message = messages[msgIds[i]];
+			var thisDateTime = message['date_time'];
+			dispMsg = '<div class="clearfix"><p class="'+message['sender']+'" data-date_time="'+thisDateTime+'">'+message['content']+'</p></div>';
 
 			// insert into #msg-body
 			if (emptyBody) {
@@ -44,13 +37,30 @@ function dispMessages(messages) {
 				emptyBody = false;
 			}
 			else {
+				var lstMsgDisp = $('#msgs-body div:first-child p');
+				var lstDateTime = lstMsgDisp.data('date_time');
+
+				// insert a datetime marker according to the days that passed by
+				if (isSameDate(thisDateTime, lstDateTime)) {
+					lstMsgDisp.hasClass("date_time") ? $('#msgs-body div:first-child').remove() : null;
+				}
+				else {
+					!lstMsgDisp.hasClass("date_time") ? insDateTimeMarker(lstDateTime) : null;
+				}
+
 				$(dispMsg).insertBefore('#msgs-body div:first-child');
+
+				// insert datetime marker for the last displayed message
+				!i ? insDateTimeMarker(thisDateTime) : null;
 			}
 		}
 
 		// scroll to end of the added messages
-		var newScrollPos = $('#msgs-body').prop('scrollHeight') - prevScrollHeight;
+		var newScrollPos = $('#msgs-body').prop('scrollHeight') - prevScrollHeight - 50;
 		$('#msgs-body').scrollTop(newScrollPos);
+
+		// track the oldest message
+		oldestMsgId = msgIds.length > 0 ? Array.min(msgIds) : null;
 	}
 	else {
 		// insert on top of #msgs-body a notice
@@ -59,7 +69,55 @@ function dispMessages(messages) {
 
 		noMoreMsgs = true;
 	}
-		
+}
+
+// check if same date as the previous message
+// @param dayA, dayB dates to compare
+function isSameDate(dayA, dayB) {
+	return dayA.substring(0,10) == dayB.substring(0,10) ? true : false;
+}
+
+// get the difference of days from now
+// @param date to compare
+function getDaysToNow(date) {
+	var today = new Date(Date.now());
+	var diff_ms = today - date;
+	return Math.round(diff_ms/ONE_DAY_MS);
+}
+
+// get time (HH:MM) in 12 hour format
+// @param date to get the time from
+function formatAMPM(date) {
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+	var ampm = hours >= 12 ? 'pm' : 'am';
+	hours = hours % 12;
+	hours = hours ? hours : 12; // the hour '0' should be '12'
+	minutes = minutes < 10 ? '0'+minutes : minutes;
+	var strTime = hours + ':' + minutes + ' ' + ampm;
+	return strTime;
+}
+
+// insert datetime marker
+// @param datetime to insert (ISO 8601 format)
+function insDateTimeMarker(datetime) {
+	var dateObj = new Date(datetime);
+	var marker = "";
+	var daysPassed = getDaysToNow(dateObj);
+
+	if (daysPassed < 7) {
+		marker = DAY_OF_WEEK[dateObj.getDay()] + " at " + formatAMPM(dateObj);
+	}
+	else if (daysPassed < 365){
+		marker = MONTH[dateObj.getMonth()] + " " + dateObj.getDate() + " at " + formatAMPM(dateObj);
+	}
+	else {
+		marker = MONTH[dateObj.getMonth()] + " " + dateObj.getDate() + ", " +
+		dateObj.getFullYear() + " at " + formatAMPM(dateObj);
+	}
+
+	marker = '<div class="clearfix"><p class="date_time" data-date_time="'+datetime+'">'+marker+'</p></div>';
+	$(marker).insertBefore('#msgs-body div:first-child');
 }
 
 // hide the #messages-view
