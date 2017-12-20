@@ -1,5 +1,13 @@
-﻿// callapsible nav
-$('.collapse').collapse()
+﻿var ONE_DAY_MS = 1000*60*60*24;
+var ONE_YEAR_MS = ONE_DAY_MS*365;
+var DAY_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+var MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// array prototype extension
+// returns the lowest value
+Array.min = function( array ){
+    return Math.min.apply( Math, array );
+};
 
 // email validation
 function isEmail(email) {
@@ -31,8 +39,6 @@ function toggleView(curView, newView, callback) {
 		if(typeof(callback) === 'function') {
 			callback();
 		}
-
-		console.log('toggle ok');
 	})
 
 }
@@ -46,6 +52,10 @@ function setMainBgPos() {
 }
 
 setMainBgPos();
+
+// callapsible nav
+$('.collapse').collapse()
+
 
 
 
