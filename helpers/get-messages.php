@@ -25,6 +25,10 @@ if ($_POST) {
 					$sender = $value === $userId ? "self" : "other";
 					$temp['sender'] = $sender;
 				}
+				elseif ($key === "date_time") {
+					// use datetime format ISO 8601
+					$temp['date_time'] = date("c", strtotime($value));
+				}
 				else {
 					$temp[$key] = $value;
 				}
