@@ -43,6 +43,14 @@
 	border-top-left-radius: 0;
 }
 
+.date_time{
+	color: #ADADAD;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
 #messages {
 	height: 68vh;
 	position: relative;
@@ -99,10 +107,10 @@
 }
 
 #end-of-msgs {
-    color: #6095ff;
+    color: #81ABFF;
     font-weight: bold;
     text-align: center;
-    margin: 15px auto 5px;
+    margin: 15px auto 0;
 }
 
 #btn-msg-send {
