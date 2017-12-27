@@ -58,7 +58,7 @@ function dispMessages(messages) {
 		$('#msgs-body').scrollTop(newScrollPos);
 
 		// track the oldest message
-		oldestMsgId = msgIds.length > 0 ? Array.min(msgIds) : null;
+		oldestMsgId = Array.min(msgIds);
 	}
 	
 	if (msgLength < 5) {
@@ -85,10 +85,10 @@ function getDaysToNow(datetime) {
 }
 
 // get time (HH:MM) in 12 hour format
-// @param datetime to get the time from
-function formatAMPM(datetime) {
-	var hours = datetime.getHours();
-	var minutes = datetime.getMinutes();
+// @param dateObj to get the time from
+function formatAMPM(dateObj) {
+	var hours = dateObj.getHours();
+	var minutes = dateObj.getMinutes();
 	var ampm = hours >= 12 ? 'pm' : 'am';
 	hours = hours % 12;
 	hours = hours ? hours : 12; // the hour '0' should be '12'
@@ -124,6 +124,9 @@ $('#messages-view').hide()
 
 // close conversations
 $('#close-btn').on('click', function() {
+	// remove the previous content of #msgs-body
+	$('#msgs-body').html('');
+	
 	noMoreMsgs = false;
 	toggleView($('#messages-view'), $('#messages-list'));
 })
@@ -132,9 +135,6 @@ $('#close-btn').on('click', function() {
 $('#messages-list h4').on('click', function() {
 	// set the text for #msgs-header
 	$('#msgs-header h4').text($(this).text());
-
-	// remove the previous content of #msgs-body
-	$('#msgs-body').html('');
 
 	// get and display the messages for the coresponding conversation
 	convId = $(this).parent().data('conv_id');
