@@ -13,7 +13,7 @@ if ($_POST) {
 	// retrieve the latest 5 messages or starting from the message id indicated
 	$conversation = $db->query("SELECT * FROM `message` WHERE `conversation_id` = $convId $andFrom ORDER BY `message`.`id` DESC LIMIT 5");
 
-	// save conversation in an array
+	// format and save conversation in an array
 	$messages = array();
 	while ($message = $conversation->fetch()) {
 		// save sender, time stamp, and content in an array
