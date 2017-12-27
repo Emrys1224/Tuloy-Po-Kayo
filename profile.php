@@ -103,13 +103,13 @@ include 'includes/nav.php';
 									<div class="list-item row">
 										<div class="col-sm-10">
 											<h4>
-												<a href="rental-unit-mngt-page.php"><?= $property['name'] ?></a>
+												<a href="rental-unit.php"><?= $property['name'] ?></a>
 											</h4>
 											<p><?= $property['address'] ?></p>
 										</div>
 										<div class="btn-group-property col-sm-2">
 											<button type="button" class="btn btn-warning btn-xs btn-del-property" data-toggle="modal" data-target="#del-property-modal">Delete</button>
-											<a href="rental-unit-mngt-page.php" class="btn btn-info btn-xs btn-edit-property">Edit</a>
+											<a href="rental-unit.php" class="btn btn-info btn-xs btn-edit-property">Edit</a>
 										</div>
 									</div>
 								<?php endforeach; ?>
@@ -117,7 +117,7 @@ include 'includes/nav.php';
 
 						</div>
 						<!-- <button type="button" class="btn btn-primary" id="btn-add-property">Add Property</button> -->
-						<a href="rental-unit-mngt-page.php" class="btn btn-primary" id="btn-add-property">Add Property</a>
+						<a href="rental-unit.php" class="btn btn-primary" id="btn-add-property">Add Property</a>
 					</div> <!-- #properties -->
 				<?php endif; ?>
 				
